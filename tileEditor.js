@@ -12,7 +12,7 @@
 	var d = document.getElementById("downBtn");
 	var resetter = document.getElementById("resetBtn");
 	var inactive = "green", active ="purple", normal ="black", background = "gray";
-	var canClickTiles = true;
+	var canClickTiles = true, uhOh = false;;
 
 	function drawBase(){
 		for(i = 0; i < xPoints.length; i++){
@@ -97,28 +97,65 @@
 			context.stroke();
 		}
 	}
-
+	/* in the following functions, the uhOh Boolean indicates that we've nudged
+	 the shape outside of the active square area on the canvas*/
 	l.onclick = function(){
 		for(i = 0; i < tiles.length; i++){
 			tiles[i].x -= 5;
+			if(tiles[i].x < (squareSize/2)){
+				uhOh= true;
+			}
+		}
+		if(uhOh){
+			for(i = 0; i < tiles.length; i++){
+				tiles[i].x += 5;
+			}
+			uhOh = false;
 		}
 		drawUpdate();
 	};
 	r.onclick = function(){
 		for(i = 0; i < tiles.length; i++){
 			tiles[i].x += 5;
+			if(tiles[i].x > canv.width - (squareSize/2)){
+				uhOh = true;
+			}
+		}
+		if(uhOh){
+			for(i = 0; i < tiles.length; i++){
+				tiles[i].x -= 5;
+			}
+			uhOh = false;
 		}
 		drawUpdate();
 	};
 	u.onclick = function(){
 		for(i = 0; i < tiles.length; i++){
 			tiles[i].y -= 5;
+			if(tiles[i].y < (squareSize/2)){
+				uhOh = true;
+			}
+		}
+		if(uhOh){
+			for(i = 0; i < tiles.length; i++){
+				tiles[i].y += 5;
+			}
+			uhOh = false;
 		}
 		drawUpdate();
 	};
 	d.onclick = function(){
 		for(i = 0; i < tiles.length; i++){
 			tiles[i].y += 5;
+			if(tiles[i].y > canv.height - (squareSize/2)){
+				uhOh = true;
+			}
+		}
+		if(uhOh){
+			for(i = 0; i < tiles.length; i++){
+				tiles[i].y -= 5;
+			}
+			uhOh = false;
 		}
 		drawUpdate();
 	};
@@ -144,9 +181,7 @@
 	   }
    });
 
-
-
-init();
-//console.log("x points: " + JSON.stringify(xPoints));
-//console.log("y points: "+JSON.stringify(yPoints));
+	init();
+	//console.log("x points: " + JSON.stringify(xPoints));
+	//console.log("y points: "+JSON.stringify(yPoints));
 }());
