@@ -1,7 +1,7 @@
 (function(){
 	var canv = document.getElementById('canv');
 	var context = canv.getContext('2d');
-	var i, j, max = 9, squareSize = 60;
+	var i, j, maxNum = 9, squareSize = 60;
 	var xPoints = [], yPoints = [], tiles = [];
 	var mouseX, mouseY;
 	var coordTile = {"x": "", "y": ""};
@@ -26,8 +26,8 @@
 	function init(){
 		context.fillStyle = inactive;
 		context.strokeStyle = normal;
-		for(i=0; i < max; i++){
-			for(j = 0; j < max ; j++){
+		for(i=0; i < maxNum; i++){
+			for(j = 0; j < maxNum ; j++){
 				xPoints.push((i*squareSize)+(squareSize/2));
 				yPoints.push(((j*squareSize)+(squareSize/2)));
 			}
@@ -117,7 +117,7 @@
 	r.onclick = function(){
 		for(i = 0; i < tiles.length; i++){
 			tiles[i].x += 5;
-			if(tiles[i].x > canv.width - (squareSize/2)){
+			if(tiles[i].x > (canv.width - (3*squareSize/2))){
 				uhOh = true;
 			}
 		}
@@ -147,7 +147,7 @@
 	d.onclick = function(){
 		for(i = 0; i < tiles.length; i++){
 			tiles[i].y += 5;
-			if(tiles[i].y > canv.height - (squareSize/2)){
+			if(tiles[i].y > (canv.height - (3*squareSize/2))){
 				uhOh = true;
 			}
 		}
