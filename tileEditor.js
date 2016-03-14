@@ -38,49 +38,42 @@
 
 	function dealWithClicks(x, y){
 		coordTile = {"x": "", "y": ""};
-
-		for(i = 0; i < xPoints.length; i++){
-			noFill = true;
-			if((x > xPoints[i])&& (x < (xPoints[i] + squareSize))){
-				//console.log("got match on x");
-      			if((y > yPoints[i]) && (y < (yPoints[i] + squareSize))){
-					//console.log("got match on y");
-					coordTile.x = xPoints[i];
-					coordTile.y = yPoints[i];
-
-						if(tiles.length === 0){
-							//console.log("tiles empty: should be filling purple");
-							tiles.push(coordTile);
-							context.fillStyle = active;
-							noFill = false;
-
-						}
-						else{
-							for(j = 0; j < tiles.length && noFill; j++){
-								if(xPoints[i] === tiles[j].x && yPoints[i] === tiles[j].y){
-									//console.log("tiles not empty: should be filling green");
-									tiles.splice(j, 1);
-									context.fillStyle = inactive;
-									noFill = false;
-								}
-								else{
-									//console.log("tiles not empty: should be filling purple");
-									//context.clearRect(xPoints[i], yPoints[j], squareSize, squareSize);
-									tiles.push(coordTile);
-									context.fillStyle = active;
-									noFill = false;
-								}
-							}
-						}
+      for(i = 0; i < xPoints.length; i++){
+         noFill = true;
+         if(((x > xPoints[i]) && (x < (xPoints[i] + squareSize))) && ((y > yPoints[i]) && (y < (yPoints[i] + squareSize)))){
+               coordTile.x = xPoints[i];
+               coordTile.y = yPoints[i];
+               if(tiles.length === 0){
+                  console.log("tiles empty: should be filling purple");
+                  tiles.push(coordTile);
+                  context.fillStyle = "purple";
+                  noFill = false;
+               }
+               else{
+                  for(j = 0; j < tiles.length && noFill; j++){
+                     if(coordTile.x === tiles[j].x && coordTile.y === tiles[j].y){
+                        console.log("tiles not empty: should be filling green");
+                        tiles.splice(j, 1);
+                        context.fillStyle = "green";
+                        noFill = false;
+                     }
+                  }
+                  if(noFill){
+                     console.log("tiles not empty: should be filling purple");
+                     //context.clearRect(xPoints[i], yPoints[j], squareSize, squareSize);
+                     tiles.push(coordTile);
+                     context.fillStyle = "purple";
+                     noFill = false;
+                  }
+               }
 					context.fillRect(xPoints[i], yPoints[i], squareSize, squareSize);
 					context.strokeRect(xPoints[i], yPoints[i], squareSize, squareSize);
 					context.fill();
 					context.stroke();
-					//console.log(JSON.stringify(tiles));
+					console.log(JSON.stringify(tiles));
 				}
 
-			}
-		}
+      }
 	}
 
 	function drawUpdate(){
@@ -147,7 +140,7 @@
 	d.onclick = function(){
 		for(i = 0; i < tiles.length; i++){
 			tiles[i].y += 5;
-			if(tiles[i].y > (canv.height - (3*squareSize/2))){
+			if(tiles[i].y >= (canv.height - (3*squareSize/2))){
 				uhOh = true;
 			}
 		}
